@@ -8,7 +8,10 @@
 
 Файл Main1.py
 
-Тестируемые изображения 480px-Lenna.png 480px-Lenna_Noise10%.png 480px-Lenna_Noise15%.png
+Тестируемые изображения 
+- 480px-Lenna.png 
+- 480px-Lenna_Noise10%.png 
+- 480px-Lenna_Noise15%.png
 
 ## 2 лабораторная работа
 Линейные нерекурсивные и рекурсивные фильтры
