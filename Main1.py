@@ -15,15 +15,15 @@ k1,   k2,   k3
 0,1   0,6   0,5
 
 '''
-from tracemalloc import start
+
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
 
 def showHist_GrayImage(image: np.array) -> None:
-    # hist = np.histogram(image, bins=range(image.min(), image.max()))
-    hist = np.histogram(image, bins=range(256))
-    plt.plot(hist[0], hist[1][:-1])
+    x_brightness, y_frequencies  = np.unique(image, return_counts=True)
+    plt.fill_between(x_brightness, 0, y_frequencies, alpha=0.7)
+    # plt.plot(x_brightness, y_frequencies)
     plt.show()
 
 if __name__ == '__main__':
@@ -32,5 +32,6 @@ if __name__ == '__main__':
         '480px-Lenna_Noise10%.png',
         '480px-Lenna_Noise15%.png',
     ]
-    image = np.array(Image.open(images[0]))
-    showHist_GrayImage(image)
+    for i in images:
+        image = np.array(Image.open(i))
+        showHist_GrayImage(image)
