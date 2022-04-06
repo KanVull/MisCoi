@@ -6,8 +6,8 @@
 Значения параметров по варианту:
     g_min:  10
     g_max:  250
-    a:      ±3,0
-    k:      ±0,25
+    a:      ±0.6
+    k:      ±0.25
 
 Реализованы формулы:
     1. Линейное функциональное отображение
@@ -112,10 +112,14 @@ def power_intensification(image: np.array, g: dict, k: float) -> np.array:
 
 if __name__ == '__main__':
     g = {'min': 10.0, 'max': 250.0}
-    a = 0.3
+    # g = {'min': 30.0, 'max': 200.0}
+    a = 0.6
+    # a = 2
     k = 0.25
+    k = 1.5
     image = np.array(Image.open('480px-Lenna.png').convert('L'))
-    # lfm_image = uniform_distribution(image, g)
+    # showHist_GrayImage(image, showImage=True)
+    # lfm_image = linear_function_mapping(image, g)
     # showHist_GrayImage(lfm_image, showImage=True)
     # ud_image = uniform_distribution(image, g)
     # showHist_GrayImage(ud_image, showImage=True)
