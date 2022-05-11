@@ -57,7 +57,6 @@ def get_contoursImage(image: np.ndarray) -> np.ndarray:
     contoursImage = np.zeros_like(image)
     cv2.drawContours(contoursImage, contours, -1, (255), 1)
     return contoursImage                      
-from test import get_skeleton
 
 def get_ABCD(contoursImage, i, j):
     '''

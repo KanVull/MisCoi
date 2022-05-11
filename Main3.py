@@ -15,6 +15,7 @@
 
 import numpy as np
 from PIL import Image
+import cv2
 
 def image_to_binary(image: np.ndarray, threshold=127) -> np.ndarray:
     '''
@@ -86,9 +87,47 @@ def B(direction: int, n_array: list) -> int:
             return n[2] and (n[0] or n[1] or n[3] or n[4]) and (n[4] or not n[5]) and (not n[6] or n[7])
         case _:
             return None
-                       
+
+def get_contoursImage(image: np.ndarray) -> np.ndarray:
+    contours, _ = cv2.findContours(image, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    contoursImage = np.zeros_like(image)
+    cv2.drawContours(contoursImage, contours, -1, (255), 1)
+    return contoursImage                      
+
+def get_ABCD(contoursImage, i, j):
+    '''
+    returns (a,b,c,d) of distance from edges
+    A - Top
+    B - Right
+    C - Bottom
+    D - Left
+    '''
+    A = B = C = D = 0
+
+    test_i = i
+    while contoursImage[test_i, j] == 0:
+        test_i += 1
+    A = test_i - i
+
+    test_j = j
+    while contoursImage[i, test_j] == 0:
+        test_j += 1
+    B = test_j - j
+
+    test_i = i
+    while contoursImage[test_i, j] == 0:
+        test_i -= 1
+    C = i - test_i
+
+    test_j = j
+    while contoursImage[i, test_j] == 0:
+        test_j -= 1
+    D = j - test_j
+
+    return A,B,C,D                           
 
 if __name__ == '__main__':
+    img = cv2.imread('FiguresR.png', 0)
     image = np.array(Image.open('Figures.png').convert('L'))
     binimage = image_to_binary(image)
     for i in range(1, binimage.shape[0]-1):
@@ -105,4 +144,6 @@ if __name__ == '__main__':
                     binimage[i+1, j+1], #n7
                 ]
                 binimage[i,j] = B(0, n_array) or B(4, n_array)      
-    show_binary_image(binimage)
+    skeleton = cv2.ximgproc.thinning(img) 
+    # show_binary_image(binimage)
+    Image.fromarray(skeleton).show()
