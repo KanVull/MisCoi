@@ -1,6 +1,6 @@
 '''
 ЛАБОРАТОРНАЯ РАБОТА №3
-СКЕЛЕТИЗАЦИЯ И УТОНЬШЕНИЕ БИНАРНЫХ ИЗОБРАЖЕНИЙ
+СКЕЛЕТИЗАЦИЯ ОБЪЕКТОВ НА ИЗОБРАЖЕНИЯХ
 
 Тестируемое изображение: Figures.png
 Фигуры по варианту:
@@ -92,7 +92,7 @@ def get_contoursImage(image: np.ndarray) -> np.ndarray:
     contours, _ = cv2.findContours(image, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     contoursImage = np.zeros_like(image)
     cv2.drawContours(contoursImage, contours, -1, (255), 1)
-    return contoursImage                      
+    return cv2.ximgproc.thinning(image)                      
 
 def get_ABCD(contoursImage, i, j):
     '''
@@ -144,6 +144,6 @@ if __name__ == '__main__':
                     binimage[i+1, j+1], #n7
                 ]
                 binimage[i,j] = B(0, n_array) or B(4, n_array)      
-    skeleton = cv2.ximgproc.thinning(img) 
+    skeleton = get_contoursImage(img)
     # show_binary_image(binimage)
     Image.fromarray(skeleton).show()
